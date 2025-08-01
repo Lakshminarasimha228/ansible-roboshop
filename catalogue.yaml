@@ -36,5 +36,37 @@
       dest: /app
       remote_src: yes
     
+  - name: Install app dependencies
+    ansible.builtin.command: npm install
+    args:
+      chdir: /app
 
+  - name: Setup systemd service for catalogue
+    ansible.builtin.copy:
+      dest: /etc/systemd/system/catalogue.service
+      content: |
+      
+  - name: Reload systemd to pick up new service
+    ansible.builtin.systemd:
+      daemon_reload: yes
+
+  - name: Enable and start catalogue service
+    ansible.builtin.systemd:
+      name: catalogue
+      enabled: yes
+      state: started
+
+  - name: Setup MongoDB repo
+    ansible.builtin.copy:
+      dest: /etc/yum.repos.d/mongo.repo
+      content: |
+
+
+  - name: Install MongoDB Shell
+    ansible.builtin.dnf:
+      name: mongodb-mongosh
+      state: present
+
+  - name: Load catalogue schema (master data)
+    ansible.builtin.command: mongosh --host <MONGODB-SERVER-IPADDRESS> </app/db/master-data.js    
      
