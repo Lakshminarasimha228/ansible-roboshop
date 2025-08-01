@@ -44,11 +44,16 @@
   - name: Setup systemd service for catalogue
     ansible.builtin.copy:
       dest: /etc/systemd/system/catalogue.service
-      content: |
-      
-  - name: Reload systemd to pick up new service
+      content: mongo.repo
+
+    - name: Reload systemd
     ansible.builtin.systemd:
       daemon_reload: yes
+
+  - name: Unmask catalogue service
+    ansible.builtin.systemd:
+      name: catalogue
+      masked: no
 
   - name: Enable and start catalogue service
     ansible.builtin.systemd:
@@ -56,17 +61,15 @@
       enabled: yes
       state: started
 
-  - name: Setup MongoDB repo
+  - name: Setup MongoDB repository
     ansible.builtin.copy:
       dest: /etc/yum.repos.d/mongo.repo
-      content: |
-
+      content: mongo.repo
 
   - name: Install MongoDB Shell
     ansible.builtin.dnf:
       name: mongodb-mongosh
       state: present
 
-  - name: Load catalogue schema (master data)
-    ansible.builtin.command: mongosh --host <MONGODB-SERVER-IPADDRESS> </app/db/master-data.js    
-     
+  - name: Load master data into MongoDB
+    ansible.builtin.command: mongosh --host <MONGODB-SERVER-IPADDRESS> </app/db/master-data.js
