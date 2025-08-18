@@ -68,8 +68,8 @@
       name: mongodb-mongosh
       state: present
 
-  - name: load products data 
+  - name: load products data
     community.mongodb.mongodb_shell:
-      file: "/app/db/master-data.js"      
-      idempotent: yes
-      login_host: mongod.lakshmi.cyou 
+      file: /app/db/master-data.js
+      idempotent: true
+      login_host: mongod.lakshmi.cyou
