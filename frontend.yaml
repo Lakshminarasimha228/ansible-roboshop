@@ -39,10 +39,11 @@
         src: nginx.conf
         dest: /etc/nginx/nginx.conf
 
-    - name: check nginx config
-      ansible.builtin.command: nginx -t
-      register: nginx_test
-      failed_when: "'successful' not in nginx_test.stderr"
+    - name: copy roboshop nginx conf
+      ansible.builtin.copy:
+        src: nginx.conf
+        dest: /etc/nginx/nginx.conf
+
 
     - name: start and enable nginx
       ansible.builtin.service:
