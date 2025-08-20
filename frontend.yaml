@@ -13,6 +13,12 @@
       name: nginx
       state: present
 
+  - name: start and enable nginx
+    ansible.builtin.service:
+      name: nginx
+      state: started
+      
+
   - name: remove html directory
     ansible.builtin.file:
       path: /usr/share/nginx/html
@@ -44,8 +50,7 @@
       src: nginx.conf
       dest: /etc/nginx/nginx.conf
 
-  - name: start and enable nginx   # ⬅ now we start after config is ready
+  - name: restart nginx
     ansible.builtin.service:
       name: nginx
-      state: started
-      enabled: yes
+      state: restarted
