@@ -67,11 +67,20 @@
       state: started
       enabled: yes
 
+  - name: create shipping mysql user
+      community.mysql.mysql_user:
+        name: shipping
+        password: "RoboShop@1"
+        host: "%"
+        priv: "cities.*:ALL"
+        state: present
+        login_user: root
+        login_password: "<your-root-password>"
+        login_host: mysql.lakshmi.cyou
+
   - name: connect to mysql using app user
     community.mysql.mysql_info:
       login_user: shipping
-      login_password: RoboShop@1
+      login_password: "RoboShop@1"
       login_host: mysql.lakshmi.cyou
-      login_db: cities
-
-
+      login_db: cities    
