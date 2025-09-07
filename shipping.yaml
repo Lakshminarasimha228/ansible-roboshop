@@ -73,8 +73,9 @@
   #     login_host: mysql.lakshmi.cyou
   #     login_db: cities
 
-
   - name: import data
+    tags: 
+    - import
     community.mysql.mysql_db:
       name: all
       login_user: root
