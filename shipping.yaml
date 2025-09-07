@@ -61,11 +61,11 @@
       name: mysql
       state: install
 
-  - name: connect to mysql using appp user               
+  - name: connect to mysql using app user
     community.mysql.mysql_info:
-    login_user: shipping
-    login_password: RoboShop@1
-    login_host: mysql.lakshmi.cyou
-    login_db: cities
+      login_user: shipping
+      login_password: RoboShop@1
+      login_host: mysql.lakshmi.cyou
+      login_db: cities
 
 
